@@ -1,0 +1,29 @@
+# AMLoadingAnimation
+
+[![CI Status](https://img.shields.io/travis/Aaron Musa/AMLoadingAnimation.svg?style=flat)](https://travis-ci.org/Aaron Musa/AMLoadingAnimation)
+[![Version](https://img.shields.io/cocoapods/v/AMLoadingAnimation.svg?style=flat)](https://cocoapods.org/pods/AMLoadingAnimation)
+[![License](https://img.shields.io/cocoapods/l/AMLoadingAnimation.svg?style=flat)](https://cocoapods.org/pods/AMLoadingAnimation)
+[![Platform](https://img.shields.io/cocoapods/p/AMLoadingAnimation.svg?style=flat)](https://cocoapods.org/pods/AMLoadingAnimation)
+
+## Example
+
+To run the example project, clone the repo, and run `pod install` from the Example directory first.
+
+## Requirements
+
+## Installation
+
+AMLoadingAnimation is available through [CocoaPods](https://cocoapods.org). To install
+it, simply add the following line to your Podfile:
+
+```ruby
+pod 'AMLoadingAnimation'
+```
+
+## Author
+
+Aaron Musa, aaron@healthnow.ph
+
+## License
+
+AMLoadingAnimation is available under the MIT license. See the LICENSE file for more info.
