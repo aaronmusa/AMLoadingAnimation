@@ -1,0 +1,16 @@
+PODS:
+  - AMLoadingAnimation (0.1.0)
+
+DEPENDENCIES:
+  - AMLoadingAnimation (from `../`)
+
+EXTERNAL SOURCES:
+  AMLoadingAnimation:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  AMLoadingAnimation: 7e46eb9a9830d786af6f918cfeb85a9422d946ab
+
+PODFILE CHECKSUM: 8e93854cc00fdf314903ad598fd3f8da5bb53aa5
+
+COCOAPODS: 1.11.2

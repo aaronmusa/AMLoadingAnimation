@@ -1,0 +1,6 @@
+framework module AMLoadingAnimation {
+  umbrella header "AMLoadingAnimation-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "AMLoadingAnimation",
+  "version": "0.1.0",
+  "summary": "A short description of AMLoadingAnimation.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/Aaron Musa/AMLoadingAnimation",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Aaron Musa": "aaron@healthnow.ph"
+  },
+  "source": {
+    "git": "https://github.com/Aaron Musa/AMLoadingAnimation.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "9.0"
+  },
+  "source_files": "AMLoadingAnimation/Classes/**/*"
+}

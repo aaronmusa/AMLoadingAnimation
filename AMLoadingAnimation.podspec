@@ -32,6 +32,12 @@ TODO: Add long description of the pod here.
 
   s.source_files = 'AMLoadingAnimation/Classes/**/*'
   
+  s.swift_version = '5.0'
+  
+  s.platforms = {
+      "ios": "9.0"
+  }
+  
   # s.resource_bundles = {
   #   'AMLoadingAnimation' => ['AMLoadingAnimation/Assets/*.png']
   # }
