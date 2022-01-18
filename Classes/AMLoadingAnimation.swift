@@ -50,13 +50,7 @@ public class AMLoadingAnimation: UIView {
     @IBInspectable
     public var trackColor: UIColor = .purple {
         didSet {
-            let path = UIBezierPath(roundedRect: bounds,
-                                    cornerRadius: bounds.height * 0.5)
-            // Assign the track color to the path
-            trackColor.setFill()
-            path.fill()
-            
-            setNeedsDisplay()
+            fillTrack()
         }
     }
     @IBInspectable
@@ -137,6 +131,8 @@ public class AMLoadingAnimation: UIView {
     }
     
     public func reload() {
+        fillTrack()
+        
         if isGradientVisible {
             if layer.sublayers?.contains(gradientLayer) != true {
                 layer.addSublayer(gradientLayer)
@@ -161,6 +157,16 @@ public class AMLoadingAnimation: UIView {
     private func stopAnimation() {
         guard !isGradientVisible else { return }
         gradientLayer.removeFromSuperlayer()
+    }
+    
+    private func fillTrack() {
+        let path = UIBezierPath(roundedRect: bounds,
+                                cornerRadius: bounds.height * 0.5)
+        // Assign the track color to the path
+        trackColor.setFill()
+        path.fill()
+        
+        setNeedsDisplay()
     }
     
     public func setGradientPosition(_ position: GradientColorPosition = .center) {
