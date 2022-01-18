@@ -10,13 +10,71 @@ import UIKit
 @IBDesignable
 public class AMLoadingAnimation: UIView {
     
+    public enum GradientColorPosition {
+        case start
+        case center
+        case end
+        
+        var locations: [NSNumber] {
+            switch self {
+            case .start: return [0.0, 1.0]
+            case .center: return [0.1, 0.5, 0.6, 0.9]
+            case .end: return [0.0, 1.0]
+            }
+        }
+        
+        func colors(_ baseColor: UIColor) -> [CGColor] {
+            switch self {
+            case .start:
+                return [
+                    baseColor.cgColor,
+                    baseColor.withAlphaComponent(0.0).cgColor
+                ]
+            case .center:
+                return [
+                    baseColor.withAlphaComponent(0.0).cgColor,
+                    baseColor.withAlphaComponent(0.7).cgColor,
+                    baseColor.withAlphaComponent(0.7).cgColor,
+                    baseColor.withAlphaComponent(0.0).cgColor
+                ]
+            case .end:
+                return [
+                    baseColor.withAlphaComponent(0.0).cgColor,
+                    baseColor.cgColor
+                ]
+            }
+        }
+    }
+    
     // MARK: - Inspectable variables
     @IBInspectable
-    public private(set) var trackColor: UIColor = .purple
+    public var trackColor: UIColor = .purple {
+        didSet {
+            let path = UIBezierPath(roundedRect: bounds,
+                                    cornerRadius: bounds.height * 0.5)
+            // Assign the track color to the path
+            trackColor.setFill()
+            path.fill()
+            
+            setNeedsDisplay()
+        }
+    }
     @IBInspectable
-    public private(set) var animatingColor: UIColor = .white
+    public var gradientColor: UIColor = .white
     @IBInspectable
-    public private(set) var duration: Double = 1.2
+    public var duration: Double = 1.2
+    @IBInspectable
+    public var isAnimating: Bool = false {
+        didSet {
+            reload()
+        }
+    }
+    @IBInspectable
+    public var isGradientVisible: Bool = false {
+        didSet {
+            reload()
+        }
+    }
     
     // MARK: - Variables
     private let animationName = "positionX"
@@ -40,20 +98,10 @@ public class AMLoadingAnimation: UIView {
         trackColor.setFill()
         path.fill()
         
-        // For gradient layer
-        let locations: [NSNumber] = [0.1, 0.5, 0.6, 0.9]
-        let colors = [
-            animatingColor.withAlphaComponent(0.0).cgColor,
-            animatingColor.withAlphaComponent(0.7).cgColor,
-            animatingColor.withAlphaComponent(0.7).cgColor,
-            animatingColor.withAlphaComponent(0.0).cgColor,
-        ]
-        
-        gradientLayer.locations = locations
-        gradientLayer.colors = colors
         gradientLayer.frame = rect
         gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0) // For horizontal gradient effect
         gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.0) // For horizontal gradient effect
+        setGradientPosition()
         
         // Animate the inner layer for indication of loading
         let animation = CABasicAnimation(keyPath: "position.x")
@@ -64,18 +112,22 @@ public class AMLoadingAnimation: UIView {
         animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
 
         self.animation = animation
+        
+        if isGradientVisible {
+            layer.addSublayer(gradientLayer)
+        }
 
-        gradientLayer.add(animation, forKey: animationName)
-
-        layer.addSublayer(gradientLayer)
+        if isAnimating {
+            startAnimation()
+        }
+        
         layer.cornerRadius = rect.height * 0.5
         clipsToBounds = true
     }
     
     // MARK: - Observers
     @objc private func willEnterForeground() {
-        guard let animation = animation else { return }
-        gradientLayer.add(animation, forKey: animationName)
+        startAnimation()
     }
 
     public override func removeFromSuperview() {
@@ -83,5 +135,36 @@ public class AMLoadingAnimation: UIView {
 
         NotificationCenter.default.removeObserver(self)
     }
+    
+    public func reload() {
+        if isGradientVisible {
+            if layer.sublayers?.contains(gradientLayer) != true {
+                layer.addSublayer(gradientLayer)
+            }
+            
+            if isAnimating {
+                startAnimation()
+                return
+            }
+            
+            return
+        }
+        
+        stopAnimation()
+    }
+    
+    private func startAnimation() {
+        guard let animation = animation, isAnimating, isGradientVisible else { return }
+        gradientLayer.add(animation, forKey: animationName)
+    }
+    
+    private func stopAnimation() {
+        guard !isGradientVisible else { return }
+        gradientLayer.removeFromSuperlayer()
+    }
+    
+    public func setGradientPosition(_ position: GradientColorPosition = .center) {
+        gradientLayer.locations = position.locations
+        gradientLayer.colors = position.colors(gradientColor)
+    }
 }
-

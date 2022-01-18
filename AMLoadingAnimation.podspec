@@ -30,7 +30,7 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '9.0'
 
-  s.source_files = 'AMLoadingAnimation/Classes/**/*'
+  s.source_files = 'Classes/**/*.swift'
   
   s.swift_version = '5.0'
   
